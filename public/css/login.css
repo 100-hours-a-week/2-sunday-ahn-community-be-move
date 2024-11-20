@@ -83,7 +83,7 @@ input[type="submit"] {
     color: red;
     font-size: 14px;
     margin-top: 3px;
-    display: none; /* 처음에는 숨김 */
+    visibility: hidden; /* 처음에는 숨김 */
 }
 
 /* 로그인 버튼 스타일 */

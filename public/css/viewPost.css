@@ -11,11 +11,11 @@ html{
 }
 /*------------- 헤더 -------------*/
 header {
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #837d7d;
     height: 104px;
     display: flex;
     align-items: center;
-    justify-content: center; /* 텍스트를 가운데에 */
+    justify-content: center;
     position: relative;
     margin: 0 auto;
     padding: 0 20px;
@@ -40,7 +40,7 @@ a {
     height: 104px;
     display: flex;
     align-items: center;
-    justify-content: center; /* 텍스트를 가운데에 */
+    justify-content: center; 
     position: relative;
     width: 392px;
 }
@@ -51,7 +51,7 @@ a {
     width: auto;
 }
 h1 {
-    font-family: "flightSans";
+    font-family: 'flightSans';
     width: 392px;
     font-size: 32px;
     font-weight: 400;
@@ -63,18 +63,17 @@ h1 {
     align-items: center;
     width: 50px;
     height: 50px;
+    position: relative;
 }
 .profileContainer {
     display: flex; 
     flex-direction: column; 
     align-items: center; 
-
 }
 .profile {
     width: 100%;
     height: 100%;
     object-fit: cover;
-
 }
 .box {
     width: 36px;
@@ -84,20 +83,16 @@ h1 {
 }
 /* 드롭다운 */
 .dropdown {
-    display: none; /* 기본적으로 숨김 */
+    display: none; 
     flex-direction: column;
-    position: relative;
-    top: 75px; /* 위치를 원하는 값으로 조정 */
-    right: 30%px;
+    position: absolute;
+    top: 40px;
+    right: 0;
     background-color: #E9E9E9;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     min-width: 140px;
     z-index: 1;
-}
-.normalProfile:hover .dropdown {
-    display: block; /* hover 시 드롭다운 표시 */
-    position: absolute;
 }
 .dropdown p {
     padding: 10px 20px;
@@ -108,11 +103,7 @@ h1 {
     cursor: pointer;
 }
 .dropdown p:hover {
-    background-color:#FFFFFF; /* hover 시 배경색 */
-}
-.headerContainer a {
-    text-decoration: none;
-    color: #000;
+    background-color: #FFFFFF; 
 }
 /* ----------- 메인 -------------- */
 main {
@@ -121,7 +112,7 @@ main {
     box-sizing: border-box;
     text-align: center;
 }
-.post {
+.onePost {
     background-color: #F4F5F7;
     margin-bottom: 10px;
 }
@@ -340,14 +331,13 @@ main {
     flex: 1; /* 댓글 내용이 가능한 한 많은 공간을 차지하도록 설정 */
     display: flex;
     flex-direction: column;
-    margin-right: 10px; /* 버튼과의 간격 조정 */
 }
 .author {
     display: flex;
-    width: 400px;
+    width: 410px;
     height: 35px;
     text-align: center;
-
+    justify-content: space-between;
 }
 .author #date {
     text-align: center;    

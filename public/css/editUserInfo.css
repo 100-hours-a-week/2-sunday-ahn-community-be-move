@@ -65,17 +65,13 @@ h1 {
     display: none; /* 기본적으로 숨김 */
     flex-direction: column;
     position: absolute;
-    top: 40px; /* 프로필 이미지 아래 위치 */
+    top: 40px;
     right: 0;
     background-color: #E9E9E9;
     border-radius: 8px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
     min-width: 140px;
     z-index: 1;
-}
-
-.normalProfile:hover .dropdown {
-    display: block; /* hover 시 드롭다운 표시 */
 }
 
 .dropdown p {
@@ -109,6 +105,12 @@ h4 {
     height: 149px; 
     border-radius: 50%;
     overflow: hidden;
+    position: relative;
+}
+.profile2 {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
 }
 main {
     max-width: 392px;
@@ -117,6 +119,22 @@ main {
     box-sizing: border-box;
     text-align: center;
 }
+/* 프로필 변경 버튼 */
+.editProfile {
+    width: 52px;
+    height: 27px;
+    transform: translate(-50%, -50%); /* 중앙 정렬 */
+    position: absolute;
+    color: white;
+    font-size: 15px;
+    top: 50%;
+    right: 15%;
+    border-radius: 25px;
+    background: #00000059;
+    border: 1px solid #FFFFFF;
+    cursor: pointer; /* 마우스 커서 변경 */
+}
+
 /* 입력 필드 */
 .inputText {
     display: flex;
@@ -159,6 +177,9 @@ input[type="submit"] {
 .error {
     color: red;
     font-size: 0.9em;
+    height: 15px;
+    font-size: 12px;
+    visibility: hidden;
 }
 
 /* 회원탈퇴 하러가기 버튼 */
@@ -177,12 +198,14 @@ input[type="submit"] {
     flex-direction: column;
 }
 .finish {
+    visibility: hidden;
     width: 102px;
     padding: 10px;
     height: 46;
     border-radius: 30px;          
     background-color: #ACA0EB;    
     color: white;  
+    transition: opacity 0.5s ease, visibility 0s 0.5s;
 }
 /* 수정완료 버튼 */
 .finishBnt {

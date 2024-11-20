@@ -1,65 +1,59 @@
 <!DOCTYPE html>
 <html lang="kr">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./css/viewPost.css">
-    <title>community</title>
+    <title>게시글 보기</title>
 </head>
 <body>
     <header>
         <div class="headerContent">
             <div class="headerContainer">
-                <a onclick="goBack()" class="backButton"><</a>
+                <a id="goBack" class="backButton"><</a>
             </div>
             <div class="headerBox">
-                <h1>아무 말 대잔치</h1>
+                <h1 id="headerBox">아무 말 대잔치</h1>
             </div>
-            <div class="normalProfile" onclick="toggleDropdown()">
+            <div class="normalProfile">
                 <div class="box" style="background: #BDBDBD;">
-                    <img class="profile" id="profileImage" src="../images/sample.jpeg">
+                    <img class="profile" id="profileImage" src="./images/sample.jpeg">
                 </div>
                 <!-- 드롭다운 메뉴 -->
-                <div class="dropdown">
-                    <p><a href="editUserInfo.html">회원정보수정</a></p>
-                    <p><a href="editPassword.html">비밀번호수정</a></p>
-                    <p><a href="logout.html">로그아웃</a></p>
+                <div class="dropdown" id="dropdownMenu">
+                    <p id="editUserInfo">회원정보수정</p>
+                    <p id="editPassword">비밀번호수정</p>
+                    <p id="logout">로그아웃</p>
                 </div>
             </div>
         </div>
     </header>
-    <script>
-        function goBack() {
-            window.history.back();  // 이전 페이지로 돌아가기
-        }
-    </script>
     <main>
-        <div class="post">
+        <div class="onePost">
             <div class="title">
                 <div class="titleTxt">
-                    <p><strong>제목 1</strong></p>
+                    <p><strong id="postTitle"></strong></p>
                 </div>
                 <div class="user">
                     <div class="profileContainer">
                         <div class="box" id="author" style="background: #BDBDBD;">
-                            <img class="profile" id="profileImage" src="../images/sample.jpeg">
+                            <img class="profile" id="authorProfileImage" src="./images/sample.jpeg">
                         </div>
                     </div>
                     <div class="userInfo">
                         <div class="nickname">
-                            <p id="userTxt">더미 작성자 1</p>
-                            <p id="date">2021-01-01 00:00:00</p>
+                            <p id="userNickname"></p>
+                            <p id="postDate"></p>
                         </div>
                         <!-- 수정 / 삭제 -->
                         <div class="edit">
-                            <button class="bnt">
-                                <div class="commentEditBtn">
+                            <button class="bnt"id="editPostBtn">
+                                <div class="postEditBtn">
                                     <p><strong>수정</strong></p>
                                 </div>
                             </button>
-                            <button class="bnt"onclick="isDeletePost()">
-                                <div class="commentEditBtn" id="deleteComment">
+                            <button class="bnt" id="deletePostBtn">
+                                <div class="postEditBtn">
                                     <p><strong>삭제</strong></p>
                                 </div>
                             </button>
@@ -68,79 +62,29 @@
                 </div>
                 <div class="content">
                     <div class="imgBox" style="background: #D9D9D9;">
-                        <img class="postImg" src="../images/sample.jpeg">
+                        <img class="postImg" id="postImage" src="">
                     </div>
-                    <div class="contentTxt">
-                        <div id="text">
-                            무엇을 얘기할까요? 아무말이라면, 삶은 항상 놀라운 모험이라고 생각합니다. 우리는 매일 새로운 경험을 하고 배우며 성장합니다. 때로는 어려움과 도전이 있지만,
-                            그것들이
-                            우리를 더 강하고 지혜롭게 만듭니다. 또한 우리는 주변의 사람들과 연결되며 사랑과 지지를 받습니다. 그래서 우리의 삶은 소중하고 의미가 있습니다.<br>
-                            자연도 아름다운 이야기입니다. 우리 주변의 자연은 끝없는 아름다움과 신비로움을 담고 있습니다. 산, 바다, 숲, 하늘 등 모든 것이 우리를 놀라게 만들고
-                            감동시킵니다.
-                            자연은 우리의 생명과 안정을 지키며 우리에게 힘을 주는 곳입니다.<br>
-                            마지막으로, 지식을 향한 탐구는 항상 흥미로운 여정입니다. 우리는 끝없는 지식의 바다에서 배우고 발견할 수 있으며, 이것이 우리를 더 깊이 이해하고 세상을 더 넓게
-                            보게
-                            해줍니다.<br>
-                            그런 의미에서, 삶은 놀라움과 경이로움으로 가득 차 있습니다. 새로운 경험을 즐기고 항상 앞으로 나아가는 것이 중요하다고 생각합니다.
-                        </div>
-                    </div>
+                    <div class="contentTxt" id="postContent"></div>
                     <div class="contentElement">
                         <div class="elements">
-                            <p>123</p>
+                            <p id="likesCount">0</p>
                             <p>좋아요수</p>
                         </div>
                         <div class="elements">
-                            <p>123</p>
+                            <p id="viewsCount">0</p>
                             <p>조회수</p>
                         </div>
                         <div class="elements">
-                            <p>123</p>
+                            <p id="commentsCount">0</p>
                             <p>댓글</p>
                         </div>
                     </div>
                 </div>
                 <div class="inputComment">
-                    <div class="inputBox">
-                        <input type="text" id="inputComment" name="email" placeholder="댓글을 남겨주세요!" required>
-                    </div>
-                    <input type="submit" value="댓글 등록" class="commentBtn">
+                    <input type="text" id="inputComment" placeholder="댓글을 남겨주세요!" required>
+                    <input type="submit" value="댓글 등록" class="commentBtn" onclick="addComment()">
                 </div>
-                <!-- 댓글 리스트 -->
-                <div class="comments">
-                    <div class="comment">
-                        <div class="profileSection">
-                            <div class="normalProfile">
-                                <div class="box" style="background: #BDBDBD;">
-                                    <img class="profile" id="profileImage" src="../images/sample.jpeg">
-                                </div>
-                            </div>
-                        </div>
-                        <div class="userInfo2">
-                            <div class="author">
-                                <p id="userTxt">더미 작성자 1</p>
-                                <p id="date">2021-01-01 00:00:00</p>
-                            </div>
-                            <div class="commentContents">
-                                <p>댓글 내용</p>
-
-                            </div>
-                        </div>
-                        <!-- 수정 / 삭제 -->
-                        <div class="edit">
-                            <div class="bnt">
-                                <div class="commentEditBtn">
-                                    <p><strong>수정</strong></p>
-                                </div>
-                            </div>
-                            <div class="bnt" onclick="isDeleteComment()">
-                                <div class="commentEditBtn">
-                                    <p><strong>삭제</strong></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                </div>
+                <div class="comments" id="commentsContainer"></div>
             </div>
         </div>
     </main>
@@ -169,40 +113,8 @@
             </div>
         </div>
     </div>
-    <script>
-        // 모달 열기 함수
-        function isDeletePost() {
-            document.getElementById("modalOverlay").style.display = "flex";
-        }
-        // 모달 닫기 함수
-        function closeModal() {
-            document.getElementById("modalOverlay").style.display = "none";
-        }
-        // 삭제 확인 함수
-        function confirmDelete() {
-            alert("게시글 삭제가 완료되었습니다.");
-            closeModal();
-            // 실제 삭제 로직
-        }
-        // 모달 열기 함수
-        function isDeleteComment()  {
-            document.getElementById("modalOverlay2").style.display = "flex";
-        }
-        // 모달 닫기 함수
-        function closeModal2() {
-            document.getElementById("modalOverlay2").style.display = "none";
-        }
-        // 삭제 확인 함수
-        function confirmDelete2() {
-            alert("댓글 삭제가 완료되었습니다.");
-            closeModal2();
-            // 실제 삭제 로직
-        }
-    </script>
-    <script src="./js/postManager.js"></script>
     <script src="./js/common.js"></script>
-    <script src="./js/commentManager.js"></script>
-
+    <script src="./js/posts/viewPostManager.js"></script>
+    <script src="./js/posts/commentManager.js"></script>
 </body>
-
 </html>

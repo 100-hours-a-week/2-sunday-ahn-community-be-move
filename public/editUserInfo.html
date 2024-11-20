@@ -11,10 +11,10 @@
 <body>
     <header>
         <div class="headers">
-            <h1>아무 말 대잔치</h1>
-            <div class="normalProfile" onclick="toggleDropdown()">
+            <h1 id="headerBox">아무 말 대잔치</h1>
+            <div class="normalProfile">
                 <div class="box" style="background: #BDBDBD;">
-                    <img class="profile" id="profileImage" src="../images/sample.jpeg">
+                    <img class="profile" id="profileImage" src="">
                 </div>
                 <!-- 드롭다운 메뉴 -->
                 <div class="dropdown" id="dropdownMenu">
@@ -32,7 +32,8 @@
                 <p>프로필 사진</p>
                 <div class="profileContainer">
                     <div class="box2" id="profileBox" style="background: #BDBDBD;">
-                        <img class="profile" id="profileImage" src="" alt="">
+                        <img class="profile2" id="profileImagePreview" src="" alt="">
+                        <button class="editProfile" id="editProfile">변경</button>
                     </div>
                     <input type="file" id="fileInput" accept="image/*" style="display: none;"> <!-- 파일 입력 숨김 -->
                 </div>
@@ -40,7 +41,7 @@
             <div>
                 <p>이메일</p>
                 <div>
-                    <p>sample.123@sample.com</p>
+                    <p id="email">sample.123@sample.com</p>
                 </div>
             </div>
             <div>
@@ -53,11 +54,9 @@
             <input type="submit" class="submitButton" value="수정하기">
             <button class="deleteMember" onclick="openModal()">회원 탈퇴</button>
             <div class="finish">
-                <div class="finishBtn">수정완료</button>
-                </div>
+                <div class="finishBtn">수정완료</div>
             </div>
     </main>
-    <script src="./js/common.js"></script>
     <!-- 모달 구조 -->
     <div class="modalDiv">
         <div class="modal-overlay" id="modalOverlay">
@@ -71,27 +70,8 @@
             </div>
         </div>
     </div>
-    <script>
-        // 모달 열기 함수
-        function openModal() {
-            document.getElementById("modalOverlay").style.display = "flex";
-        }
-
-        // 모달 닫기 함수
-        function closeModal() {
-            document.getElementById("modalOverlay").style.display = "none";
-        }
-
-        // 회원 탈퇴 확인 함수
-        function confirmDelete() {
-            alert("회원 탈퇴가 완료되었습니다.");
-            // 실제 탈퇴 로직
-            closeModal();
-            
-        }
-    </script>
-    <script src="./js/userManager.js"></script>
     <script src="./js/common.js"></script>
+    <script src="./js/userManager.js"></script>
 </body>
 
 </html>

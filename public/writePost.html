@@ -12,29 +12,24 @@
     <header>
         <div class="headerContent">
             <div class="headerContainer">
-                <a onclick="goBack()" class="backButton"><</a>
+                <a id="goBack" class="backButton"><</a>
             </div>
             <div class="headerBox">
-                <h1>아무 말 대잔치</h1>
+                <h1 id="headerBox">아무 말 대잔치</h1>
             </div>
-            <div class="normalProfile" onclick="toggleDropdown()">
+            <div class="normalProfile">
                 <div class="box" style="background: #BDBDBD;">
-                    <img class="profile" id="profileImage" src="../images/sample.jpeg">
+                    <img class="profile" id="profileImage" src="./images/sample.jpeg">
                 </div>
                 <!-- 드롭다운 메뉴 -->
-                <div class="dropdown">
-                    <p><a href="editUserInfo.html">회원정보수정</a></p>
-                    <p><a href="editPassword.html">비밀번호수정</a></p>
-                    <p><a href="logout.html">로그아웃</a></p>
+                <div class="dropdown" id="dropdownMenu">
+                    <p id="editUserInfo">회원정보수정</p>
+                    <p id="editPassword">비밀번호수정</p>
+                    <p id="logout">로그아웃</p>
                 </div>
             </div>
         </div>
     </header>
-    <script>
-        function goBack() {
-            window.history.back();  // 이전 페이지로 돌아가기
-        }
-    </script>
     <main>
         <h5><strong>게시글 작성</strong></h5>
         <div class="inputText">
@@ -44,10 +39,10 @@
             </div>
             <div>
                 <p>내용*</p>
-                <input type="content" id="content" name="content" value="내용을 입력해주세요." required>
+                <textarea id="content" name="content" placeholder="내용을 입력해주세요." rows="10" required></textarea>
             </div>
             <div>
-                <div id="imageerror" class="error">*helper text</div>
+                <div id="errorMessage" class="error">*제목, 내용을 모두 작성해주세요</div>
                 <p>이미지</p>
                 <input type="file" id="fileInput" accept="image/*" value="파일선택"> <!-- 파일 입력 숨김 -->
             </div>
@@ -56,7 +51,7 @@
             <input type="submit" class="submitButton" value="완료">
         </div>
     </main>
-    <script src="./js/postManager.js"></script>
+    <script src="./js/posts/writePostManager.js"></script>
     <script src="./js/common.js"></script>
 </body>
 

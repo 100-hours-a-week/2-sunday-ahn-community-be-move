@@ -1,3 +1,14 @@
+// 뒤로가기 및 로그인 이동 버튼 설정
+document.getElementById('goBack').addEventListener('click', () => {
+    console.log("뒤로가기 클릭");
+    window.history.back();
+});
+
+document.getElementById('loginButton').addEventListener('click', () => {
+    console.log("로그인하러가기 클릭");
+    window.location.href = "/login";
+});
+
 document.addEventListener("DOMContentLoaded", function () {
     const fileInput = document.getElementById("fileInput");
     const profileImage = document.getElementById("profileImage");
@@ -7,49 +18,67 @@ document.addEventListener("DOMContentLoaded", function () {
     const confirmPasswordInput = document.getElementById("confirmPassword");
     const nicknameInput = document.getElementById("nickname");
     const registButton = document.getElementById("registButton");
+    const profileError = document.getElementById("profileError");
+    let profileImageFile = null; 
 
-    let profileImageBase64 = ""; // Base64 형식의 프로필 이미지 저장
-    
-    // 프로필 사진 클릭 시 파일 선택 트리거
-    profileBox.addEventListener("click", function () {
-        fileInput.click();
-    });
-
-    // 파일 선택 시 Base64로 변환하여 미리보기 및 저장
-    fileInput.addEventListener("change", function (event) {
-        const file = event.target.files[0];
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-                profileImageBase64 = e.target.result; // Base64로 이미지 저장
-                profileImage.src = profileImageBase64; // 이미지 미리보기
-                profileImage.style.display = "block";
-                profileBox.style.background = "none";
-            };
-            reader.readAsDataURL(file);
-        } else {
-            resetProfileImage();
+    async function checkDuplicate(apiUrl, value, errorElement) {
+        try {
+            const response = await fetch(apiUrl, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(value)
+            });
+            const result = await response.json();
+            if (response.ok) {
+                errorElement.textContent = "";
+                return true;
+            } else if (response.status === 401) {
+                errorElement.textContent = result.message;
+                return false;
+            } else {
+                errorElement.textContent = "서버 오류가 발생했습니다.";
+                return false;
+            }
+        } catch (error) {
+            console.error("중복 검사 요청 실패:", error);
+            errorElement.textContent = "네트워크 오류가 발생했습니다.";
+            return false;
         }
-    });
+    }
+
+    async function checkEmailDuplicate() {
+        const email = emailInput.value.trim();
+        const emailError = document.getElementById("emailError");
+        if (!email) {
+            emailError.textContent = "*이메일을 입력해주세요.";
+            return false;
+        }
+        return await checkDuplicate("http://localhost:3000/auth/email", { email }, emailError);
+    }
+
+    async function checkNicknameDuplicate() {
+        const nickname = nicknameInput.value.trim();
+        const nicknameError = document.getElementById("nicknameError");
+        if (!nickname) {
+            nicknameError.textContent = "*닉네임을 입력해주세요.";
+            return false;
+        }
+        return await checkDuplicate("http://localhost:3000/auth/nickname", { nickname }, nicknameError);
+    }
 
     function resetProfileImage() {
         profileImage.src = "";
         profileImage.style.display = "none";
         profileBox.style.background = "#BDBDBD";
-        profileImageBase64 = "";
+        profileImageFile = null;
     }
 
-    // 유효성 검사
-    function validateEmail() {
+    function validateEmailFormat() {
         const email = emailInput.value.trim();
         const emailError = document.getElementById("emailError");
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-        emailError.textContent = ""; // 이전 에러 메시지 초기화
-
-        if (!email) {
-            emailError.textContent = "*이메일을 입력해주세요.";
-            return false;
-        } else if (!emailPattern.test(email)) {
+        emailError.textContent = "";
+        if (!emailPattern.test(email)) {
             emailError.textContent = "*올바른 이메일 주소 형식을 입력해주세요.";
             return false;
         }
@@ -61,16 +90,12 @@ document.addEventListener("DOMContentLoaded", function () {
         const confirmPassword = confirmPasswordInput.value;
         const passwordError = document.getElementById("passwordError");
         const confirmPasswordError = document.getElementById("confirmPasswordError");
-        passwordError.textContent = ""; // 이전 에러 메시지 초기화
-        confirmPasswordError.textContent = ""; // 이전 에러 메시지 초기화
-
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,20}$/;
+        passwordError.textContent = "";
+        confirmPasswordError.textContent = "";
 
-        if (!password) {
-            passwordError.textContent = "*비밀번호를 입력해주세요.";
-            return false;
-        } else if (!passwordPattern.test(password)) {
-            passwordError.textContent = "*비밀번호는 8자 이상, 20자 이하이며, 대문자, 소문자, 숫자, 특수문자를 각각 포함해야 합니다.";
+        if (!passwordPattern.test(password)) {
+            passwordError.textContent = "*비밀번호는 8자 이상, 대문자, 소문자, 숫자, 특수문자를 각각 포함해야 합니다.";
             return false;
         } else if (password !== confirmPassword) {
             confirmPasswordError.textContent = "*비밀번호가 일치하지 않습니다.";
@@ -79,32 +104,36 @@ document.addEventListener("DOMContentLoaded", function () {
         return true;
     }
 
-    function validateNickname() {
+    function validateNicknameFormat() {
         const nickname = nicknameInput.value.trim();
         const nicknameError = document.getElementById("nicknameError");
-        nicknameError.textContent = ""; // 이전 에러 메시지 초기화
-
-        if (!nickname) {
-            nicknameError.textContent = "*닉네임을 입력해주세요.";
-            return false;
-        } else if (nickname.length > 10) {
-            nicknameError.textContent = "*닉네임은 최대 10자까지 입력 가능합니다.";
-            return false;
-        } else if (/\s/.test(nickname)) {
-            nicknameError.textContent = "*띄어쓰기를 제거해주세요.";
+        nicknameError.textContent = "";
+        if (nickname.length > 10 || /\s/.test(nickname)) {
+            nicknameError.textContent = "*닉네임은 10자 이하, 띄어쓰기 없음이어야 합니다.";
             return false;
         }
         return true;
     }
 
-    // 유효성 검사 후 버튼 활성화
-    function toggleSubmitButton() {
-        const isEmailValid = validateEmail();
-        const isPasswordValid = validatePassword();
-        const isNicknameValid = validateNickname();
+    function validateProfileImage() {
+        if (!profileImageFile) {
+            profileError.textContent = "*프로필 사진을 추가해주세요.";
+            return false;
+        }
+        profileError.textContent = "";
+        return true;
+    }
 
-        // 모든 유효성 검사가 통과하면 버튼 활성화
-        if (isEmailValid && isPasswordValid && isNicknameValid) {
+    async function toggleSubmitButton() {
+        const isEmailFormatValid = validateEmailFormat();
+        const isPasswordValid = validatePassword();
+        const isNicknameFormatValid = validateNicknameFormat();
+        const isProfileImageValid = validateProfileImage();
+
+        const isEmailUnique = await checkEmailDuplicate();
+        const isNicknameUnique = await checkNicknameDuplicate();
+
+        if (isEmailFormatValid && isPasswordValid && isNicknameFormatValid && isProfileImageValid && isEmailUnique && isNicknameUnique) {
             registButton.disabled = false;
             registButton.style.backgroundColor = "#7F6AEE";
         } else {
@@ -113,46 +142,85 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // 포커스 아웃 시 유효성 검사
-    emailInput.addEventListener("focusout", toggleSubmitButton);
+    emailInput.addEventListener("focusout", async () => {
+        await checkEmailDuplicate();
+        toggleSubmitButton();
+    });
+    nicknameInput.addEventListener("focusout", async () => {
+        await checkNicknameDuplicate();
+        toggleSubmitButton();
+    });
     passwordInput.addEventListener("focusout", toggleSubmitButton);
     confirmPasswordInput.addEventListener("focusout", toggleSubmitButton);
-    nicknameInput.addEventListener("focusout", toggleSubmitButton);
 
-    // 회원가입 버튼 클릭 시 데이터 JSON으로 저장
+    profileBox.addEventListener("click", function () {
+        fileInput.click();
+    });
+
+    fileInput.addEventListener("change", function (event) {
+        const file = event.target.files[0];
+        if (file) {
+            profileImageFile = file;
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                profileImage.src = e.target.result;
+                profileImage.style.display = "block";
+                profileBox.style.background = "none";
+                profileError.textContent = "";
+            };
+            reader.readAsDataURL(file);
+        } else {
+            resetProfileImage();
+        }
+        toggleSubmitButton();
+    });
+
     registButton.addEventListener("click", async function (event) {
         event.preventDefault();
 
-        if (!validateEmail() || !validatePassword() || !validateNickname()) {
+        if (!validateEmailFormat() || !validatePassword() || !validateNicknameFormat() || !validateProfileImage()) {
             return;
         }
 
-        const userData = {
-            email: emailInput.value,
-            password: passwordInput.value,
-            nickname: nicknameInput.value,
-            profileImage: profileImageBase64 // Base64 인코딩된 이미지 저장
-        };
-
+        const formData = new FormData();
+        formData.append("image", profileImageFile);
         try {
-            const response = await fetch('http://localhost:3000/user/regist', {
+            const uploadResponse = await fetch('http://localhost:2000/upLoadProfile', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!uploadResponse.ok) {
+                const error = await uploadResponse.json();
+                console.error('프로필 이미지 업로드 실패:', error);
+                alert('프로필 이미지 업로드에 실패했습니다.');
+                return;
+            }
+
+            const result = await uploadResponse.json();
+            const profileImageUrl = result.imageUrl;
+
+            const userData = {
+                email: emailInput.value,
+                password: passwordInput.value,
+                nickname: nicknameInput.value,
+                profileImage: profileImageUrl
+            };
+
+            const response = await fetch('http://localhost:3000/auth/regist', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData)
             });
 
             if (response.ok) {
-                const result = await response.json();
-                console.log('회원가입 데이터 저장 완료:', result);
                 alert('회원가입이 완료되었습니다.');
                 window.location.href = "/login";
             } else {
                 const error = await response.json();
-                console.error('회원가입 데이터 저장 실패:', error);
-                alert('회원가입 저장에 실패했습니다.');
+                alert('회원가입 저장에 실패했습니다: ' + error.message);
             }
         } catch (error) {
-            console.error('네트워크 오류:', error);
             alert('서버에 연결할 수 없습니다.');
         }
     });
