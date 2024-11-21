@@ -99,27 +99,28 @@ async function isLoggedIn() {
 
 // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
 async function loadUserInfo() {
-    const loggedIn = await isLoggedIn(); // 로그인 상태 확인
-
-    if (!loggedIn) {
-        alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
-        window.location.href = '/login'; // 로그인 페이지로 리다이렉션
-        return null;
-    }
-
     try {
         const userInfoResponse = await fetch('http://localhost:3000/auth/userInfo', {
             method: 'GET',
             credentials: 'include' // 세션 쿠키 포함
         });
 
+        // 서버에서 로그인되지 않았다는 응답이 오면
+        if (userInfoResponse.status === 401) {
+            alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
+            window.location.href = '/login'; // 로그인 페이지로 리다이렉션
+            return null;
+        }
+
         if (!userInfoResponse.ok) {
             console.error("서버 응답 실패: ", userInfoResponse.status);
             throw new Error('Failed to fetch user information.');
         }
-        const profileImageSrc= document.getElementById("profileImage");
+
+        const profileImageSrc = document.getElementById("profileImage");
         const userInfoData = await userInfoResponse.json();
-        if (userInfoData.data) {
+
+        if (userInfoData.isLogin && userInfoData.data) {
             sessionStorage.setItem('user', JSON.stringify(userInfoData.data)); // 세션에 정보 저장
             profileImageSrc.src = userInfoData.data.profileImage;
             return userInfoData.data;
@@ -133,7 +134,6 @@ async function loadUserInfo() {
         return null;
     }
 }
-
 
 
 // 날짜 포맷
