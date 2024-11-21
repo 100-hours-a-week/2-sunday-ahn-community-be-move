@@ -51,10 +51,10 @@ document.addEventListener("DOMContentLoaded", async function() {
             postLikes.innerHTML = postData.likes;
             postViews.innerHTML = postData.views;
             postComments.innerHTML = postData.commentsCnt;  // 댓글 수 표시
-            postDate.innerHTML = postData.date;
+            postDate.innerHTML = formatDateToCustomFormat(postData.date);
             authorImage.src = postData.author.profileImg;
             postAuthor.innerHTML = postData.author.nickname;
-            postImage.src = postData.imageUrl;
+            postImage.src = postData.imageUrl? postData.imageUrl : '../images/sample.jpeg';
 
             // 댓글 수를 갱신
             updateCommentCount(postData.commentsCnt);
@@ -89,7 +89,7 @@ document.addEventListener("DOMContentLoaded", async function() {
                 <div class="userInfo2">
                     <div class="author">
                         <p>${comment.author.nickname}</p>
-                        <p>${comment.date}</p>
+                        <p>${formatDateToCustomFormat(comment.date)}</p>
                     </div>
                     <div class="commentContents">
                         <p>${comment.content}</p>

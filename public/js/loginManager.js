@@ -106,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
 document.getElementById('registButton').addEventListener('click', () => {
     console.log("회원가입 클릭")
     window.location.href = "./regist"

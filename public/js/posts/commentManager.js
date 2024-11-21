@@ -60,15 +60,10 @@ async function updateComment() {
     currentEditingComment.querySelector('.commentContents p').innerText = updatedText;
 
     const commentId = currentEditingComment.dataset.commentId;
-    const postId = currentEditingComment.dataset.postId;
-    const userId = currentEditingComment.dataset.userId;
-    const editDate = formatDateToCustomFormat(new Date());
 
     const updatedComment = {
-        userId: userId,
-        postId: postId,
-        newComment: updatedText,
-        date: editDate,
+        commentId: commentId,
+        content: updatedText
     };
 
     try {
@@ -106,14 +101,12 @@ async function addComment() {
 
     const postId = parseInt(new URLSearchParams(window.location.search).get('postId'));
     
-    //여기서 안받아와짐 undefined
     const userId = (await loadUserInfo()).userId;
 
     const newComment = {
         userId: userId,
         postId: postId,
-        content: commentText,
-        date: formatDateToCustomFormat(new Date())
+        content: commentText
     };
 
     try {
@@ -135,9 +128,9 @@ async function addComment() {
                 author: {
                     userId: data.data.userId,
                     nickname: data.data.author.nickname,
-                    profileImage: data.data.author.profileImage
+                    profileImg: data.data.author.profileImg
                 },
-                date: formatDateToCustomFormat(new Date())
+                date: formatDateToCustomFormat(data.data.date)
             };
 
             appendCommentToDOM(comment);
@@ -178,14 +171,14 @@ function appendCommentToDOM(comment) {
         <div class="profileSection">
             <div class="normalProfile">
                 <div class="box" style="background: #BDBDBD;">
-                    <img class="profile" src="${comment.author.profileImage}">
+                    <img class="profile" src="${comment.author.profileImg}">
                 </div>
             </div>
         </div>
         <div class="userInfo2">
             <div class="author">
                 <p>${comment.author.nickname}</p>
-                <p>${comment.date}</p>
+                <p>${formatDateToCustomFormat(comment.date)}</p>
             </div>
             <div class="commentContents">
                 <p>${comment.content}</p>

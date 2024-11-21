@@ -49,7 +49,7 @@ document.addEventListener("DOMContentLoaded", async function () {
                                     <p id="comments">댓글 ${post.commentsCnt || 0}</p>
                                     <p id="views">조회수 ${post.views || 0}</p>
                                 </div>
-                                <p id="date">${post.date}</p>
+                                <p id="date">${formatDateToCustomFormat(post.date)}</p>
                             </div>
                         `;
 

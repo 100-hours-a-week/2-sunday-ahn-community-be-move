@@ -50,8 +50,7 @@ document.addEventListener("DOMContentLoaded", async function () {
     // 게시글 작성 요청 함수
     async function submitPost() {
         const title = titleInput.value.trim();
-        const content = contentInput.value.trim();
-        const date = formatDateToCustomFormat(new Date()); 
+        const content = contentInput.value.trim(); 
         
         const imageUrl = await uploadImage();
 
@@ -59,7 +58,6 @@ document.addEventListener("DOMContentLoaded", async function () {
             userId: userInfo.userId,
             title: title,
             content: content,
-            date: date,
             imageUrl: imageUrl,
         };
 

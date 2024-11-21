@@ -95,9 +95,8 @@ submitButton.addEventListener("click", async function (event) {
 
     // 수정 요청 데이터 생성
     const postData = {
-        newTitle: title,
-        newContent: content,
-        editDate: formatDateToCustomFormat(new Date()),
+        title: title,
+        content: content,
         imageUrl: imageUrl, // 이미지 URL 포함
     };
 
