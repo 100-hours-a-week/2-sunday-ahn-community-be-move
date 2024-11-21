@@ -75,7 +75,7 @@ const loadUserInfo = async () => {
             credentials: 'include' // 세션 쿠키 포함
         });
 
-        if (userInfoResponse.status === 401) {
+        if (userInfoResponse.status === 400) {
             alert("로그인이 필요합니다. 로그인 페이지로 이동합니다.");
             window.location.href = '/login';
             return null;
@@ -89,7 +89,7 @@ const loadUserInfo = async () => {
         const profileImageSrc = document.getElementById("profileImage");
         const userInfoData = await userInfoResponse.json();
 
-        if (userInfoData.isLogin && userInfoData.data) {
+        if (userInfoData.data) {
             sessionStorage.setItem('user', JSON.stringify(userInfoData.data)); // 세션에 정보 저장
             profileImageSrc.src = userInfoData.data.profileImage;
             return userInfoData.data;
