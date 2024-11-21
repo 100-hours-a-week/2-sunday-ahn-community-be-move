@@ -1,13 +1,13 @@
-document.addEventListener("DOMContentLoaded", async function() {
+document.addEventListener("DOMContentLoaded", async () => {
     const userInfo = await loadUserInfo();
     // 게시물 정보 가져오기
     try {
-        const response = await fetch(`http://localhost:3000/posts/${postId}`,{
+        const response = await fetch(`http://localhost:3000/posts/${postId}`, {
             method: "GET",
             credentials: 'include' // 세션 쿠키를 포함시킴
         });
         if (!response.ok) {
-            throw new Error("게시물을 불러오는 데 실패했습니다.잉~");
+            throw new Error("게시물을 불러오는 데 실패했습니다.");
         }
         const data = await response.json();
         const post = data.data;
@@ -44,7 +44,7 @@ const fileInput = document.getElementById("fileInput");
 let existingImageUrl = null; // 기존 이미지 URL을 저장하는 변수
 
 // 이미지 업로드 처리 함수
-async function uploadImage() {
+const uploadImage = async () => {
     const formData = new FormData();
     formData.append('image', fileInput.files[0]); // 파일 선택 시 첫 번째 파일 사용
 
@@ -69,7 +69,7 @@ async function uploadImage() {
 }
 
 // 게시글 수정 처리
-submitButton.addEventListener("click", async function (event) {
+submitButton.addEventListener("click", async (event) => {
     event.preventDefault();
     const title = titleInput.value.trim();
     const content = contentInput.value.trim();
@@ -115,8 +115,7 @@ submitButton.addEventListener("click", async function (event) {
             throw new Error("게시물 수정 실패");
         }
 
-        const data = await response.json();
-        alert("게시물이 성공적으로 수정되었습니다.");
+        // const data = await response.json();
         window.location.href = `/viewPost?postId=${postId}`; // 수정 후 상세 페이지로 이동
     } catch (error) {
         console.error("게시물 수정 중 오류 발생:", error);

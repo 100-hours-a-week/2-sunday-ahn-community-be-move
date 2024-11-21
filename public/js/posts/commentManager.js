@@ -2,18 +2,18 @@
 let currentEditingComment = null;
 
 // 모달 열기 함수 (삭제 확인 모달)
-function isDeleteComment(commentElement) {
+const isDeleteComment = (commentElement) => {
     currentEditingComment = commentElement;
     document.getElementById("modalOverlay2").style.display = "flex";
 }
 
 // 모달 닫기 함수 (삭제 확인 모달)
-function closeModal2() {
+const closeModal2 = () => {
     document.getElementById("modalOverlay2").style.display = "none";
 }
 
 // 댓글 삭제 확인 함수
-async function confirmDelete2() {
+const confirmDelete2 = async () => {
     if (!currentEditingComment) {
         console.error("삭제할 댓글이 선택되지 않았습니다.");
         return;
@@ -40,7 +40,7 @@ async function confirmDelete2() {
 }
 
 // 댓글 수정 함수
-function editComment(commentElement) {
+const editComment = (commentElement) => {
     currentEditingComment = commentElement;
 
     const commentText = commentElement.querySelector('.commentContents p').innerText;
@@ -53,7 +53,7 @@ function editComment(commentElement) {
 }
 
 // 댓글 수정 완료 함수
-async function updateComment() {
+const updateComment = async () => {
     const updatedText = document.getElementById('inputComment').value;
     if (!currentEditingComment) return;
 
@@ -92,7 +92,7 @@ async function updateComment() {
 }
 
 // 새로운 댓글 추가 함수
-async function addComment() {
+const addComment = async () => {
     const commentText = document.getElementById('inputComment').value;
     if (commentText === "") {
         alert("댓글을 입력해 주세요.");
@@ -148,7 +148,7 @@ async function addComment() {
 }
 
 // 댓글 수 갱신 함수
-function updateCommentCount() {
+const updateCommentCount = () => {
     const commentsContainer = document.getElementById("commentsContainer");
     const commentCount = commentsContainer.children.length;
     const commentCountElement = document.getElementById("commentsCount");
@@ -158,7 +158,7 @@ function updateCommentCount() {
 }
 
 // 서버에서 받은 댓글을 DOM에 추가하는 함수
-function appendCommentToDOM(comment) {
+const appendCommentToDOM = (comment) => {
     const commentsContainer = document.getElementById("commentsContainer");
 
     const commentElement = document.createElement("div");
@@ -203,7 +203,7 @@ function appendCommentToDOM(comment) {
 }
 
 // 댓글 입력란 변경에 따른 버튼 활성화/비활성화
-function toggleSubmitButton() {
+const toggleSubmitButton = () => {
     const commentText = document.getElementById('inputComment').value;
     const submitButton = document.querySelector('.commentBtn');
     if (commentText.trim() === "") {
