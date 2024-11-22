@@ -33,7 +33,6 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         } catch (error) {
             console.error("게시글 목록을 불러오는 중 오류 발생:", error);
-            alert("*서버에 연결할 수 없습니다.");
         }
     };
 
