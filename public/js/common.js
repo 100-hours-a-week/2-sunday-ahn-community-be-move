@@ -70,6 +70,19 @@ document.addEventListener("DOMContentLoaded", () => {
 // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
 const loadUserInfo = async () => {
     try {
+        // 세션 스토리지에서 사용자 정보 확인
+        const cachedUser = sessionStorage.getItem('user');
+        
+        if (cachedUser) {
+            const userInfoData = JSON.parse(cachedUser);
+
+            // 프로필 이미지 업데이트
+            const profileImageSrc = document.getElementById("profileImage");
+            profileImageSrc.src = userInfoData.profileImage || '../images/sample.jpeg';
+            return userInfoData;
+        }
+
+        // 세션에 정보가 없으면 서버에 요청
         const userInfoResponse = await fetch('http://localhost:3000/auth/userInfo', {
             method: 'GET',
             credentials: 'include' // 세션 쿠키 포함
@@ -86,20 +99,21 @@ const loadUserInfo = async () => {
             throw new Error('Failed to fetch user information.');
         }
 
-        const profileImageSrc = document.getElementById("profileImage");
         const userInfoData = await userInfoResponse.json();
 
         if (userInfoData.data) {
-            sessionStorage.setItem('user', JSON.stringify(userInfoData.data)); // 세션에 정보 저장
-            profileImageSrc.src = userInfoData.data.profileImage;
+            // 세션 스토리지에 사용자 정보 저장
+            sessionStorage.setItem('user', JSON.stringify(userInfoData.data));
+
+            // 프로필 이미지 업데이트
+            const profileImageSrc = document.getElementById("profileImage");
+            profileImageSrc.src = userInfoData.data.profileImage || '../images/sample.jpeg';
             return userInfoData.data;
         } else {
-            profileImageSrc.src = './images/sample.jpeg';
             throw new Error('사용자 정보가 없습니다.');
         }
     } catch (error) {
         console.error("loadUserInfo 에러 발생: ", error.message);
-        alert(error.message);
         return null;
     }
 };
