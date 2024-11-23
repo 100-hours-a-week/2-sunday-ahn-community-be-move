@@ -1,5 +1,6 @@
 ## 커뮤니티 만들기 과제<br>
-실행방법<br>
+커뮤니티 FE 입니다.
+#### 실행방법<br>
 npm start
 
 ## 기술 리스트
@@ -48,6 +49,3 @@ npm start
 - [x] /users/withdraw/{userId} 유저 회원 탈퇴
 - [x] /comments/{commentId} 댓글삭제
 - [x] /posts/{postId} 게시물 삭제
-
-# 실행방법<br>
-npm start
