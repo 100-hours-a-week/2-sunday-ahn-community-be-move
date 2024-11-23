@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded", () => {
     const emailInput = document.getElementById("emailInput");
     const passwordInput = document.getElementById("passwordInput");
     const loginButton = document.getElementById("loginButton");
@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loginButton.style.backgroundColor = "#ACA0EB";
 
     // 이메일 유효성 검사
-    function validateEmail() {
+    const validateEmail = () => {
         const emailValue = emailInput.value.trim();
         const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         emailError.textContent = ""; // 에러 메시지 초기화
@@ -28,10 +28,10 @@ document.addEventListener("DOMContentLoaded", function () {
             emailError.style.visibility = "hidden";
             return true;
         }
-    }
+    };
 
     // 비밀번호 유효성 검사
-    function validatePassword() {
+    const validatePassword = () => {
         const passwordValue = passwordInput.value;
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,20}$/;
         passwordError.textContent = ""; // 에러 메시지 초기화
@@ -48,10 +48,10 @@ document.addEventListener("DOMContentLoaded", function () {
             passwordError.style.visibility = "hidden";
             return true;
         }
-    }
+    };
 
     // 버튼 활성화/비활성화 제어
-    function toggleLoginButton() {
+    const toggleLoginButton = () => {
         const isEmailValid = validateEmail();
         const isPasswordValid = validatePassword();
 
@@ -62,7 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
             loginButton.disabled = true;
             loginButton.style.backgroundColor = "#ACA0EB";
         }
-    }
+    };
 
     // 입력 이벤트 발생 시 유효성 검사 실행
     emailInput.addEventListener("input", toggleLoginButton);
@@ -72,7 +72,6 @@ document.addEventListener("DOMContentLoaded", function () {
     loginButton.addEventListener("click", async (e) => {
         e.preventDefault(); // 폼 제출 방지
 
-        // 유효성 검사 통과 여부 확인
         if (validateEmail() && validatePassword()) {
             const email = emailInput.value.trim();
             const password = passwordInput.value.trim();
@@ -89,10 +88,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const result = await response.json();
 
-                // 응답에 따라 처리
                 if (response.ok) {
                     // 로그인 성공
-                    window.location.href = "./posts"; // 게시물리스트 페이지로 이동
+                    window.location.href = "./posts"; // 게시물 리스트 페이지로 이동
                 } else {
                     // 실패 시 메시지 표시
                     passwordError.textContent = result.message;
@@ -106,8 +104,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 
-
+// 회원가입 버튼 클릭 이벤트
 document.getElementById('registButton').addEventListener('click', () => {
-    console.log("회원가입 클릭")
-    window.location.href = "./regist"
+    console.log("회원가입 클릭");
+    window.location.href = "./regist";
 });

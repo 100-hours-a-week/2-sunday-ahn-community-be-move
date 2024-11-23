@@ -3,16 +3,17 @@ document.addEventListener("DOMContentLoaded", async function () {
     const contentInput = document.getElementById("content");
     const submitButton = document.querySelector(".submitButton");
     const errorText = document.getElementById("errorMessage");
+    const fileInput = document.getElementById("fileInput");
 
     const userInfo = await loadUserInfo();
 
     // 제목과 내용이 모두 입력될 때 버튼 색상 변경 및 활성화
     function toggleButtonState() {
         if (titleInput.value.trim() !== "" && contentInput.value.trim() !== "") {
-            submitButton.style.backgroundColor = "#7F6AEE"; // 활성화 색상
+            submitButton.classList.remove("disabled"); // CSS 클래스 변경
             submitButton.disabled = false;
         } else {
-            submitButton.style.backgroundColor = "#ACA0EB"; // 비활성화 색상
+            submitButton.classList.add("disabled"); // 비활성화 클래스 추가
             submitButton.disabled = true;
         }
     }
@@ -21,9 +22,9 @@ document.addEventListener("DOMContentLoaded", async function () {
     titleInput.addEventListener("input", toggleButtonState);
     contentInput.addEventListener("input", toggleButtonState);
 
-    //이미지 업로드 함수
+    // 이미지 업로드 함수
     async function uploadImage() {
-        if (fileInput.files.length === 0) return null;
+        if (fileInput.files.length === 0) return null; // 이미지가 선택되지 않으면 null 반환
 
         const formData = new FormData();
         formData.append('image', fileInput.files[0]);
@@ -40,26 +41,30 @@ document.addEventListener("DOMContentLoaded", async function () {
             }
 
             const data = await response.json();
-            return data.imageUrl;
+            return data.imageUrl; // 업로드된 이미지 URL 반환
         } catch (error) {
             console.error("이미지 업로드 오류:", error);
             alert("이미지 업로드에 실패했습니다. 다시 시도해주세요.");
-            return null;
+            return null; // 실패 시 null 반환
         }
     }
+
     // 게시글 작성 요청 함수
     async function submitPost() {
         const title = titleInput.value.trim();
         const content = contentInput.value.trim();
-        const date = formatDateToCustomFormat(new Date()); 
-        
-        const imageUrl = await uploadImage();
+
+        let imageUrl = await uploadImage(); // 이미지 URL을 가져옴
+
+        // 이미지가 업로드되지 않은 경우 기본 이미지 사용
+        if (!imageUrl) {
+            imageUrl = "../images/sample.jpeg"; // 기본 이미지 URL 설정
+        }
 
         const newPost = {
             userId: userInfo.userId,
             title: title,
             content: content,
-            date: date,
             imageUrl: imageUrl,
         };
 
@@ -68,14 +73,14 @@ document.addEventListener("DOMContentLoaded", async function () {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newPost),
-                credentials: 'include' // 세션 쿠키를 포함시킴
+                credentials: 'include' // 세션 쿠키 포함
             });
 
             const data = await response.json();
 
             if (response.ok) {
                 console.log(data.message);
-                window.location.href = "/posts"; // 작성 완료 시 페이지 이동
+                window.location.href = "/posts"; // 게시글 작성 완료 후 목록 페이지로 이동
             } else {
                 console.error("게시글 작성 실패:", data.message);
                 errorText.innerText = "*서버에 오류가 발생했습니다. 다시 시도해주세요.";

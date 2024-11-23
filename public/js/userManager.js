@@ -1,35 +1,36 @@
 // 토스트 메시지 표시 함수
-function showToast() {
+const showToast = () => {
     const toast = document.querySelector(".finish");
     if (toast) {
         toast.style.visibility = "visible";
         toast.style.opacity = 0.9;
-        setTimeout(function () {
+        setTimeout(() => {
             toast.style.opacity = 0;
-            setTimeout(function () {
+            setTimeout(() => {
                 toast.style.visibility = "hidden";
             }, 300);
         }, 1000);
     }
-}
+};
 
 // 모달 열기 함수
-function openModal() {
+const openModal = () => {
     const modalOverlay = document.getElementById("modalOverlay");
     if (modalOverlay) {
         modalOverlay.style.display = "flex";
     }
-}
+};
 
 // 모달 닫기 함수
-function closeModal() {
+const closeModal = () => {
     const modalOverlay = document.getElementById("modalOverlay");
     if (modalOverlay) {
         modalOverlay.style.display = "none";
     }
-}
+};
+
 // 회원 탈퇴 함수
-async function confirmDelete() {
+const confirmDelete = async () => {
     const userInfo = await loadUserInfo(); // 로컬에서 사용자 정보 가져오기
 
     try {
@@ -44,12 +45,12 @@ async function confirmDelete() {
             window.location.href = "/login"; // 로그인 페이지로 이동
         } else {
             const error = await response.json();
-            alert("회원 탈퇴 실패: " + error.message);
+            alert(`회원 탈퇴 실패: ${error.message}`);
         }
     } catch (error) {
-        alert("네트워크 오류 발생: " + error.message);
+        alert(`네트워크 오류 발생: ${error.message}`);
     }
-}
+};
 
 document.addEventListener("DOMContentLoaded", async () => {
     const fileInput = document.getElementById("fileInput");
@@ -64,7 +65,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 초기 사용자 정보 로드
     nicknameInput.placeholder = userInfo.nickname;
     profileImagePreview.src = userInfo.profileImage;
-    // profileImage.src = userInfo.profileImage;
     emailTxt.textContent = userInfo.email;
     let uploadedProfileImageUrl = userInfo.profileImage; // 기존 프로필 이미지 URL 초기화
 
@@ -72,13 +72,13 @@ document.addEventListener("DOMContentLoaded", async () => {
     editProfileButton.addEventListener("click", () => fileInput.click());
 
     // 파일 선택 후 미리보기
-    fileInput.addEventListener("change", async (event) => {
+    fileInput.addEventListener("change", (event) => {
         const file = event.target.files[0];
         if (file) {
             const reader = new FileReader();
 
             // 파일 읽기가 완료되면 미리보기 업데이트
-            reader.onload = function (e) {
+            reader.onload = (e) => {
                 const imageUrl = e.target.result;
                 profileImagePreview.src = imageUrl;
                 profileImagePreview.style.display = "block";
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                 if (!uploadResponse.ok) {
                     const error = await uploadResponse.json();
-                    alert("프로필 이미지 업로드 실패: " + error.message);
+                    alert(`프로필 이미지 업로드 실패: ${error.message}`);
                     hasError = true;
                 } else {
                     const result = await uploadResponse.json();
@@ -158,10 +158,10 @@ document.addEventListener("DOMContentLoaded", async () => {
 
                     if (!imageResponse.ok) {
                         const imageError = await imageResponse.json();
-                        alert("프로필 이미지 변경 실패: " + imageError.message);
+                        alert(`프로필 이미지 변경 실패: ${imageError.message}`);
                         hasError = true;
                     } else {
-                        profileImage.src = uploadedProfileImageUrl; // 프로필 이미지 업데이트
+                        profileImagePreview.src = uploadedProfileImageUrl; // 프로필 이미지 업데이트
                         // 프로필 변경 후 세션 업데이트
                         userInfo.profileImage = uploadedProfileImageUrl; // 세션에 반영된 정보 업데이트
                     }
@@ -173,7 +173,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 showToast();
             }
         } catch (error) {
-            alert("네트워크 오류 발생: " + error.message);
+            alert(`네트워크 오류 발생: ${error.message}`);
         }
     });
 });

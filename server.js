@@ -1,35 +1,42 @@
-const express = require('express');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+import express from 'express';
+import multer from 'multer';
+import path from 'path';
+import fs from 'fs';
+import { fileURLToPath } from 'url';
+
+// 현재 파일의 디렉터리 경로 구하기 (ES6 모듈에서 __dirname을 사용하기 위해)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 const app = express();
 const PORT = 2000;
 
 app.use(express.static(path.join(__dirname, 'public')));
 
+// 라우트 설정
 app.get(['/login', '/'], (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/login.html'));
+    res.sendFile(path.join(__dirname, 'public', 'login.html'));
 });
 app.get('/regist', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/regist.html'));
+    res.sendFile(path.join(__dirname, 'public', 'regist.html'));
 });
 app.get('/editPassword', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/editPassword.html'));
+    res.sendFile(path.join(__dirname, 'public', 'editPassword.html'));
 });
 app.get('/editUserInfo', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/editUserInfo.html'));
+    res.sendFile(path.join(__dirname, 'public', 'editUserInfo.html'));
 });
 app.get('/posts', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/posts.html'));
+    res.sendFile(path.join(__dirname, 'public', 'posts.html'));
 });
 app.get('/viewPost', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/viewPost.html'));
+    res.sendFile(path.join(__dirname, 'public', 'viewPost.html'));
 });
 app.get('/editPost', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/editPost.html'));
+    res.sendFile(path.join(__dirname, 'public', 'editPost.html'));
 });
 app.get('/writePost', (req, res) => {
-    res.sendFile(path.join(__dirname, 'public/writePost.html'));
+    res.sendFile(path.join(__dirname, 'public', 'writePost.html'));
 });
 
 // JSON 요청 처리
@@ -40,7 +47,7 @@ const imageUploadPath = path.join(__dirname, 'public', 'images');
 
 // images 디렉토리 존재 여부 확인 후 생성
 if (!fs.existsSync(imageUploadPath)) {
-    console.log("폴더없음");
+    fs.mkdirSync(imageUploadPath, { recursive: true }); // 디렉토리 생성
 }
 
 // multer의 스토리지 설정
@@ -61,7 +68,7 @@ const upload = multer({ storage });
 app.post('/upLoadProfile', upload.single('image'), (req, res) => {
     if (req.file) {
         const imageUrl = `http://localhost:${PORT}/images/${req.file.filename}`;
-        console.log(imageUrl)
+        console.log(imageUrl);
         res.json({ imageUrl });
     } else {
         res.status(400).send('파일 업로드 실패');

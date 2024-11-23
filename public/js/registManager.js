@@ -1,15 +1,19 @@
-// 뒤로가기 및 로그인 이동 버튼 설정
-document.getElementById('goBack').addEventListener('click', () => {
-    console.log("뒤로가기 클릭");
-    window.history.back();
-});
+document.addEventListener("DOMContentLoaded", async () => {
+    const goBackButton = document.getElementById('goBack');
+    const loginButton = document.getElementById('loginButton');
 
-document.getElementById('loginButton').addEventListener('click', () => {
-    console.log("로그인하러가기 클릭");
-    window.location.href = "/login";
-});
+    // 뒤로가기 버튼 클릭 이벤트
+    goBackButton.addEventListener('click', () => {
+        console.log("뒤로가기 클릭");
+        window.history.back();
+    });
 
-document.addEventListener("DOMContentLoaded", function () {
+    // 로그인 버튼 클릭 이벤트
+    loginButton.addEventListener('click', () => {
+        console.log("로그인하러가기 클릭");
+        window.location.href = "/login";
+    });
+
     const fileInput = document.getElementById("fileInput");
     const profileImage = document.getElementById("profileImage");
     const profileBox = document.getElementById("profileBox");
@@ -19,15 +23,16 @@ document.addEventListener("DOMContentLoaded", function () {
     const nicknameInput = document.getElementById("nickname");
     const registButton = document.getElementById("registButton");
     const profileError = document.getElementById("profileError");
-    let profileImageFile = null; 
+    let profileImageFile = null;
 
-    async function checkDuplicate(apiUrl, value, errorElement) {
+    const checkDuplicate = async (apiUrl, value, errorElement) => {
         try {
             const response = await fetch(apiUrl, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(value)
             });
+
             const result = await response.json();
             if (response.ok) {
                 errorElement.textContent = "";
@@ -44,9 +49,9 @@ document.addEventListener("DOMContentLoaded", function () {
             errorElement.textContent = "네트워크 오류가 발생했습니다.";
             return false;
         }
-    }
+    };
 
-    async function checkEmailDuplicate() {
+    const checkEmailDuplicate = async () => {
         const email = emailInput.value.trim();
         const emailError = document.getElementById("emailError");
         if (!email) {
@@ -54,9 +59,9 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
         return await checkDuplicate("http://localhost:3000/auth/email", { email }, emailError);
-    }
+    };
 
-    async function checkNicknameDuplicate() {
+    const checkNicknameDuplicate = async () => {
         const nickname = nicknameInput.value.trim();
         const nicknameError = document.getElementById("nicknameError");
         if (!nickname) {
@@ -64,33 +69,35 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
         return await checkDuplicate("http://localhost:3000/auth/nickname", { nickname }, nicknameError);
-    }
+    };
 
-    function resetProfileImage() {
+    const resetProfileImage = () => {
         profileImage.src = "";
         profileImage.style.display = "none";
         profileBox.style.background = "#BDBDBD";
         profileImageFile = null;
-    }
+    };
 
-    function validateEmailFormat() {
+    const validateEmailFormat = () => {
         const email = emailInput.value.trim();
         const emailError = document.getElementById("emailError");
         const emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
         emailError.textContent = "";
         if (!emailPattern.test(email)) {
             emailError.textContent = "*올바른 이메일 주소 형식을 입력해주세요.";
             return false;
         }
         return true;
-    }
+    };
 
-    function validatePassword() {
+    const validatePassword = () => {
         const password = passwordInput.value;
         const confirmPassword = confirmPasswordInput.value;
         const passwordError = document.getElementById("passwordError");
         const confirmPasswordError = document.getElementById("confirmPasswordError");
         const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,20}$/;
+
         passwordError.textContent = "";
         confirmPasswordError.textContent = "";
 
@@ -102,29 +109,30 @@ document.addEventListener("DOMContentLoaded", function () {
             return false;
         }
         return true;
-    }
+    };
 
-    function validateNicknameFormat() {
+    const validateNicknameFormat = () => {
         const nickname = nicknameInput.value.trim();
         const nicknameError = document.getElementById("nicknameError");
+
         nicknameError.textContent = "";
         if (nickname.length > 10 || /\s/.test(nickname)) {
             nicknameError.textContent = "*닉네임은 10자 이하, 띄어쓰기 없음이어야 합니다.";
             return false;
         }
         return true;
-    }
+    };
 
-    function validateProfileImage() {
+    const validateProfileImage = () => {
         if (!profileImageFile) {
             profileError.textContent = "*프로필 사진을 추가해주세요.";
             return false;
         }
         profileError.textContent = "";
         return true;
-    }
+    };
 
-    async function toggleSubmitButton() {
+    const toggleSubmitButton = async () => {
         const isEmailFormatValid = validateEmailFormat();
         const isPasswordValid = validatePassword();
         const isNicknameFormatValid = validateNicknameFormat();
@@ -140,29 +148,29 @@ document.addEventListener("DOMContentLoaded", function () {
             registButton.disabled = true;
             registButton.style.backgroundColor = "#ACA0EB";
         }
-    }
+    };
 
     emailInput.addEventListener("focusout", async () => {
         await checkEmailDuplicate();
         toggleSubmitButton();
     });
+
     nicknameInput.addEventListener("focusout", async () => {
         await checkNicknameDuplicate();
         toggleSubmitButton();
     });
+
     passwordInput.addEventListener("focusout", toggleSubmitButton);
     confirmPasswordInput.addEventListener("focusout", toggleSubmitButton);
 
-    profileBox.addEventListener("click", function () {
-        fileInput.click();
-    });
+    profileBox.addEventListener("click", () => fileInput.click());
 
-    fileInput.addEventListener("change", function (event) {
+    fileInput.addEventListener("change", (event) => {
         const file = event.target.files[0];
         if (file) {
             profileImageFile = file;
             const reader = new FileReader();
-            reader.onload = function (e) {
+            reader.onload = (e) => {
                 profileImage.src = e.target.result;
                 profileImage.style.display = "block";
                 profileBox.style.background = "none";
@@ -175,7 +183,7 @@ document.addEventListener("DOMContentLoaded", function () {
         toggleSubmitButton();
     });
 
-    registButton.addEventListener("click", async function (event) {
+    registButton.addEventListener("click", async (event) => {
         event.preventDefault();
 
         if (!validateEmailFormat() || !validatePassword() || !validateNicknameFormat() || !validateProfileImage()) {
@@ -184,6 +192,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         const formData = new FormData();
         formData.append("image", profileImageFile);
+
         try {
             const uploadResponse = await fetch('http://localhost:2000/upLoadProfile', {
                 method: 'POST',

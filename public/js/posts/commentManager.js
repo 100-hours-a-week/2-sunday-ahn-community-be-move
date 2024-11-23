@@ -2,18 +2,18 @@
 let currentEditingComment = null;
 
 // 모달 열기 함수 (삭제 확인 모달)
-function isDeleteComment(commentElement) {
+const isDeleteComment = (commentElement) => {
     currentEditingComment = commentElement;
     document.getElementById("modalOverlay2").style.display = "flex";
 }
 
 // 모달 닫기 함수 (삭제 확인 모달)
-function closeModal2() {
+const closeModal2 = () => {
     document.getElementById("modalOverlay2").style.display = "none";
 }
 
 // 댓글 삭제 확인 함수
-async function confirmDelete2() {
+const confirmDelete2 = async () => {
     if (!currentEditingComment) {
         console.error("삭제할 댓글이 선택되지 않았습니다.");
         return;
@@ -40,7 +40,7 @@ async function confirmDelete2() {
 }
 
 // 댓글 수정 함수
-function editComment(commentElement) {
+const editComment = (commentElement) => {
     currentEditingComment = commentElement;
 
     const commentText = commentElement.querySelector('.commentContents p').innerText;
@@ -53,22 +53,17 @@ function editComment(commentElement) {
 }
 
 // 댓글 수정 완료 함수
-async function updateComment() {
+const updateComment = async () => {
     const updatedText = document.getElementById('inputComment').value;
     if (!currentEditingComment) return;
 
     currentEditingComment.querySelector('.commentContents p').innerText = updatedText;
 
     const commentId = currentEditingComment.dataset.commentId;
-    const postId = currentEditingComment.dataset.postId;
-    const userId = currentEditingComment.dataset.userId;
-    const editDate = formatDateToCustomFormat(new Date());
 
     const updatedComment = {
-        userId: userId,
-        postId: postId,
-        newComment: updatedText,
-        date: editDate,
+        commentId: commentId,
+        content: updatedText
     };
 
     try {
@@ -97,7 +92,7 @@ async function updateComment() {
 }
 
 // 새로운 댓글 추가 함수
-async function addComment() {
+const addComment = async () => {
     const commentText = document.getElementById('inputComment').value;
     if (commentText === "") {
         alert("댓글을 입력해 주세요.");
@@ -106,14 +101,12 @@ async function addComment() {
 
     const postId = parseInt(new URLSearchParams(window.location.search).get('postId'));
     
-    //여기서 안받아와짐 undefined
     const userId = (await loadUserInfo()).userId;
 
     const newComment = {
         userId: userId,
         postId: postId,
-        content: commentText,
-        date: formatDateToCustomFormat(new Date())
+        content: commentText
     };
 
     try {
@@ -135,9 +128,9 @@ async function addComment() {
                 author: {
                     userId: data.data.userId,
                     nickname: data.data.author.nickname,
-                    profileImage: data.data.author.profileImage
+                    profileImg: data.data.author.profileImg
                 },
-                date: formatDateToCustomFormat(new Date())
+                date: formatDateToCustomFormat(data.data.date)
             };
 
             appendCommentToDOM(comment);
@@ -155,7 +148,7 @@ async function addComment() {
 }
 
 // 댓글 수 갱신 함수
-function updateCommentCount() {
+const updateCommentCount = () => {
     const commentsContainer = document.getElementById("commentsContainer");
     const commentCount = commentsContainer.children.length;
     const commentCountElement = document.getElementById("commentsCount");
@@ -165,7 +158,7 @@ function updateCommentCount() {
 }
 
 // 서버에서 받은 댓글을 DOM에 추가하는 함수
-function appendCommentToDOM(comment) {
+const appendCommentToDOM = (comment) => {
     const commentsContainer = document.getElementById("commentsContainer");
 
     const commentElement = document.createElement("div");
@@ -178,14 +171,14 @@ function appendCommentToDOM(comment) {
         <div class="profileSection">
             <div class="normalProfile">
                 <div class="box" style="background: #BDBDBD;">
-                    <img class="profile" src="${comment.author.profileImage}">
+                    <img class="profile" src="${comment.author.profileImg}">
                 </div>
             </div>
         </div>
         <div class="userInfo2">
             <div class="author">
                 <p>${comment.author.nickname}</p>
-                <p>${comment.date}</p>
+                <p>${formatDateToCustomFormat(comment.date)}</p>
             </div>
             <div class="commentContents">
                 <p>${comment.content}</p>
@@ -210,7 +203,7 @@ function appendCommentToDOM(comment) {
 }
 
 // 댓글 입력란 변경에 따른 버튼 활성화/비활성화
-function toggleSubmitButton() {
+const toggleSubmitButton = () => {
     const commentText = document.getElementById('inputComment').value;
     const submitButton = document.querySelector('.commentBtn');
     if (commentText.trim() === "") {
