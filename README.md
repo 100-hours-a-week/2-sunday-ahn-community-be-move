@@ -4,7 +4,9 @@
 npm start
 
 ## 기술 리스트
-[![My Skills](https://skillicons.dev/icons?i=html,css,js)](https://skillicons.dev)
+![HTML5](https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white)
+![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
 
 ## 회고<br>
 기간내에 끝내고 싶었지만 1주차때 너무 많이 물려있었다..nodemon과 세션에 대해 좀 더 알았다면 간단하게 끝낼 수 있었던 부분이 너무 아쉽다..어떠한 기술을 사용할 때 정확하게 알고 써야한다는 것을 알고있었지만 실행에 옮기지않았던거같다. 앞으로는 사용하는 기술에 대해 조금이라도 더 조사하고 사용해야겠다...😭
