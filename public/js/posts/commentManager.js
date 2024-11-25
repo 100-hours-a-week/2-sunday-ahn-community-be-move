@@ -198,7 +198,8 @@ const appendCommentToDOM = (comment) => {
         </div>
     `;
 
-    commentsContainer.appendChild(commentElement);
+    // 댓글을 상단에 추가
+    commentsContainer.insertBefore(commentElement, commentsContainer.firstChild);
     updateCommentCount();
 }
 
