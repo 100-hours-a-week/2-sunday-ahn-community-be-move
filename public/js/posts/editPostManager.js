@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", async () => {
     const userInfo = await loadUserInfo();
     // 게시물 정보 가져오기
+    const loadingScreen = document.getElementById("loadingScreen"); // 로딩 화면 엘리먼트
+    // 로딩 화면 표시
+    loadingScreen.style.display = "flex";
     try {
         const response = await fetch(`http://localhost:3000/posts/${postId}`, {
             method: "GET",
@@ -30,6 +33,9 @@ document.addEventListener("DOMContentLoaded", async () => {
     } catch (error) {
         console.error("게시물 정보 불러오기 오류:", error);
         alert("게시물 정보를 불러오는 데 실패했습니다.");
+    }finally {
+        // 로딩 화면 숨기기
+        loadingScreen.style.display = "none";
     }
 });
 
