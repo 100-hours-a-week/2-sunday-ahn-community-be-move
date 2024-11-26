@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", async () => {
+    const loadingScreen = document.getElementById("loadingScreen"); // 로딩 화면 엘리먼트
+    // 로딩 화면 표시
+    loadingScreen.style.display = "flex";
+
     // 게시글 정보 표시 요소
     const postTitle = document.getElementById("postTitle");
     const postContent = document.getElementById("postContent");
@@ -66,9 +70,12 @@ document.addEventListener("DOMContentLoaded", async () => {
         } catch (error) {
             console.error(error);
             alert(`게시글을 불러오는 중 오류가 발생했습니다. ${error.message}`);
+        }finally {
+            // 로딩 화면 숨기기
+            loadingScreen.style.display = "none";
         }
     }
-
+    
     // 댓글 표시 함수
     const displayComments = (comments) => {
         commentsContainer.innerHTML = "";
@@ -170,3 +177,27 @@ const confirmDelete = () => {
         alert(`게시글을 삭제하는 중 오류가 발생했습니다: ${error.message}`);
     });
 }
+
+// 좋아요 클릭
+const toggleLike = async () => {
+    const postId = new URLSearchParams(window.location.search).get('postId'); // postId 가져오기
+    const postLikes = document.getElementById("likesCount");
+
+    try {
+        const response = await fetch(`http://localhost:3000/posts/${postId}/likes`, {
+            method: 'GET',
+            credentials: 'include'
+        });
+
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.message || '좋아요 처리 중 오류가 발생했습니다.');
+        }
+
+        postLikes.innerText = parseInt(postLikes.innerText) + 1;  // 기존 좋아요 수에 1 추가
+
+    } catch (error) {
+        console.error(error);
+        alert(`좋아요 처리 중 오류가 발생했습니다. ${error.message}`);
+    }
+};

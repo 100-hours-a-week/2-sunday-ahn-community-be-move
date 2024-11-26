@@ -2,6 +2,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     const postBtn = document.getElementById("postBtn");
     const postsContainer = document.querySelector(".postList");
 
+    const loadingScreen = document.getElementById("loadingScreen"); // 로딩 화면 엘리먼트
+    // 로딩 화면 표시
+    loadingScreen.style.display = "flex";
+    
     const userInfo = await loadUserInfo();
 
     // 게시물 작성 버튼
@@ -33,6 +37,9 @@ document.addEventListener("DOMContentLoaded", async () => {
             }
         } catch (error) {
             console.error("게시글 목록을 불러오는 중 오류 발생:", error);
+        }finally {
+            // 로딩 화면 숨기기
+            loadingScreen.style.display = "none";
         }
     };
 

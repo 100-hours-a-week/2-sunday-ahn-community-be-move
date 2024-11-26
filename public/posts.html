@@ -6,9 +6,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="./css/posts.css">
     <title>community</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lottie-web/5.12.2/lottie.min.js"></script>
 </head>
 
 <body>
+    <!-- 로딩 화면 -->
+    <div id="loadingScreen" style="display: none;">
+        <div id="lottie-animation" style="width: 100%; height: 250px;margin-bottom: -50px;">
+        </div>
+        <script>
+            var animation = lottie.loadAnimation({
+            container: document.getElementById('lottie-animation'), // 애니메이션을 넣을 위치
+            renderer: 'svg', // 렌더링 방식 ('svg', 'canvas', 'html' 중 선택)
+            loop: true, // 반복 재생 여부
+            autoplay: true, // 자동 재생 여부
+            path: 'loadingIcon.json', // Lottie 파일의 경로
+            speed: 0.1 // 애니메이션 속도를 0.5배 느리게 설정
+            });
+        </script>
+        
+    </div>
+
     <header>
         <div class="headers">
             <h1 id="headerBox">아무 말 대잔치</h1>

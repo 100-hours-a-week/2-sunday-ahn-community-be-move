@@ -176,4 +176,5 @@ document.addEventListener("DOMContentLoaded", async () => {
             alert(`네트워크 오류 발생: ${error.message}`);
         }
     });
+    await loadUserInfo();
 });
