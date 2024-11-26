@@ -70,17 +70,17 @@ document.addEventListener("DOMContentLoaded", () => {
 // 로그인되지 않은 경우 로그인 페이지로 리다이렉션
 const loadUserInfo = async () => {
     try {
-        // 세션 스토리지에서 사용자 정보 확인
-        const cachedUser = sessionStorage.getItem('user');
+        // // 세션 스토리지에서 사용자 정보 확인
+        // const cachedUser = sessionStorage.getItem('user');
         
-        if (cachedUser) {
-            const userInfoData = JSON.parse(cachedUser);
+        // if (cachedUser) {
+        //     const userInfoData = JSON.parse(cachedUser);
 
-            // 프로필 이미지 업데이트
-            const profileImageSrc = document.getElementById("profileImage");
-            profileImageSrc.src = userInfoData.profileImage || '../images/sample.jpeg';
-            return userInfoData;
-        }
+        //     // 프로필 이미지 업데이트
+        //     const profileImageSrc = document.getElementById("profileImage");
+        //     profileImageSrc.src = userInfoData.profileImage || '../images/sample.jpeg';
+        //     return userInfoData;
+        // }
 
         // 세션에 정보가 없으면 서버에 요청
         const userInfoResponse = await fetch('http://localhost:3000/auth/userInfo', {
