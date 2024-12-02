@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         formData.append('image', fileInput.files[0]);
 
         try {
-            const response = await fetch(`http://${process.env.HOST}:2000/upLoadProfile`, {
+            const response = await fetch(`http://3.36.118.177:2000/upLoadProfile`, {
                 method: "POST",
                 body: formData,
                 credentials: "include"
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         };
 
         try {
-            const response = await fetch(`http://${process.env.HOST}:3000/api/posts`, {
+            const response = await fetch(`http://3.36.118.177:3000/api/posts`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newPost),

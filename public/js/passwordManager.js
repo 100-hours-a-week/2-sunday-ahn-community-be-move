@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             const { userId } = userInfo;
 
             try {
-                const response = await fetch(`http://${process.env.HOST}:3000/api/users/password/${userId}`, {
+                const response = await fetch(`http://3.36.118.177:3000/api/users/password/${userId}`, {
                     method: 'PATCH',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(passwordData),
