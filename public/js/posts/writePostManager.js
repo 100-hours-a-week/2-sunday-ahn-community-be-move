@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         };
 
         try {
-            const response = await fetch(`http://3.36.118.177:3000/api/posts`, {
+            const response = await fetch(`http://3.36.118.177:3000/posts`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newPost),
