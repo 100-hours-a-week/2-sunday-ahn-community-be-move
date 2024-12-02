@@ -1,4 +1,3 @@
-import 'dotenv/config';
 document.addEventListener("DOMContentLoaded", () => {
     const dropdownMenu = document.getElementById("dropdownMenu");
     const normalProfile = document.querySelector(".normalProfile");
@@ -36,7 +35,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("logout").addEventListener("click", async () => {
         console.log("로그아웃 클릭");
         try {
-            const response = await fetch('http://${process.env.HOST}:3000/api/users/logout', {
+            const response = await fetch(`http://${process.env.HOST}:3000/api/users/logout`, {
                 method: 'POST',
                 credentials: 'include' // 세션 쿠키 포함
             });
@@ -84,7 +83,7 @@ const loadUserInfo = async () => {
         // }
 
         // 세션에 정보가 없으면 서버에 요청
-        const userInfoResponse = await fetch('http://${process.env.HOST}:3000/api/auth/userInfo', {
+        const userInfoResponse = await fetch(`http://${process.env.HOST}:3000/api/auth/userInfo`, {
             method: 'GET',
             credentials: 'include' // 세션 쿠키 포함
         });

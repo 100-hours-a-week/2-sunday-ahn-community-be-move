@@ -1,4 +1,3 @@
-import 'dotenv/config';
 document.addEventListener("DOMContentLoaded", async () => {
     const goBackButton = document.getElementById('goBack');
     const loginButton = document.getElementById('loginButton');
@@ -59,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             emailError.textContent = "*이메일을 입력해주세요.";
             return false;
         }
-        return await checkDuplicate("http://${process.env.HOST}:3000/api/auth/email", { email }, emailError);
+        return await checkDuplicate(`http://${process.env.HOST}:3000/api/auth/email`, { email }, emailError);
     };
 
     const checkNicknameDuplicate = async () => {
@@ -69,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             nicknameError.textContent = "*닉네임을 입력해주세요.";
             return false;
         }
-        return await checkDuplicate("http://${process.env.HOST}:3000/api/auth/nickname", { nickname }, nicknameError);
+        return await checkDuplicate(`http://${process.env.HOST}:3000/api/auth/nickname`, { nickname }, nicknameError);
     };
 
     const resetProfileImage = () => {
@@ -195,7 +194,7 @@ document.addEventListener("DOMContentLoaded", async () => {
         formData.append("image", profileImageFile);
 
         try {
-            const uploadResponse = await fetch('http://${process.env.HOST}:2000/upLoadProfile', {
+            const uploadResponse = await fetch(`http://${process.env.HOST}:2000/upLoadProfile`, {
                 method: 'POST',
                 body: formData
             });
@@ -217,7 +216,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 profileImage: profileImageUrl
             };
 
-            const response = await fetch('http://${process.env.HOST}:3000/api/auth/regist', {
+            const response = await fetch(`http://${process.env.HOST}:3000/api/auth/regist`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData)

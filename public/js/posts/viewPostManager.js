@@ -1,4 +1,3 @@
-import 'dotenv/config';
 document.addEventListener("DOMContentLoaded", async () => {
     const loadingScreen = document.getElementById("loadingScreen"); // 로딩 화면 엘리먼트
     // 로딩 화면 표시

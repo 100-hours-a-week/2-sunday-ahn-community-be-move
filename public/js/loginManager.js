@@ -1,4 +1,3 @@
-import 'dotenv/config';
 document.addEventListener("DOMContentLoaded", () => {
     const emailInput = document.getElementById("emailInput");
     const passwordInput = document.getElementById("passwordInput");
@@ -78,7 +77,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const password = passwordInput.value.trim();
 
             try {
-                const response = await fetch('http://${process.env.HOST}:3000/api/auth/login', {
+                const response = await fetch(`http://${process.env.HOST}:3000/api/auth/login`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'

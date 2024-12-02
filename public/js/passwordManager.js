@@ -1,4 +1,3 @@
-import 'dotenv/config';
 document.addEventListener("DOMContentLoaded", async () => {
     const submitButton = document.querySelector(".submitButton");
     const passwordInput = document.getElementById("password");

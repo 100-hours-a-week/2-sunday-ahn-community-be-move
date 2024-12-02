@@ -1,4 +1,3 @@
-import 'dotenv/config';
 // 댓글 수정 중인 댓글을 기억하기 위한 변수
 let currentEditingComment = null;
 
@@ -111,7 +110,7 @@ const addComment = async () => {
     };
 
     try {
-        const response = await fetch('http://${process.env.HOST}:3000/api/comments', {
+        const response = await fetch(`http://${process.env.HOST}:3000/api/comments`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newComment),

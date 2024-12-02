@@ -1,4 +1,3 @@
-import 'dotenv/config';
 // 토스트 메시지 표시 함수
 const showToast = () => {
     const toast = document.querySelector(".finish");
@@ -135,7 +134,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const formData = new FormData();
                 formData.append("image", file);
 
-                const uploadResponse = await fetch("http://${process.env.HOST}:2000/upLoadProfile", {
+                const uploadResponse = await fetch(`http://${process.env.HOST}:2000/upLoadProfile`, {
                     method: "POST",
                     body: formData,
                     credentials: "include"

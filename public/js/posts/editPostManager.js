@@ -1,4 +1,3 @@
-import 'dotenv/config';
 document.addEventListener("DOMContentLoaded", async () => {
     const userInfo = await loadUserInfo();
     // 게시물 정보 가져오기
