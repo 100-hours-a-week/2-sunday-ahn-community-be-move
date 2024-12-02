@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             emailError.textContent = "*이메일을 입력해주세요.";
             return false;
         }
-        return await checkDuplicate("http://0.0.0.0:3000/auth/email", { email }, emailError);
+        return await checkDuplicate("http://0.0.0.0:3000/api/auth/email", { email }, emailError);
     };
 
     const checkNicknameDuplicate = async () => {
@@ -68,7 +68,7 @@ document.addEventListener("DOMContentLoaded", async () => {
             nicknameError.textContent = "*닉네임을 입력해주세요.";
             return false;
         }
-        return await checkDuplicate("http://0.0.0.0:3000/auth/nickname", { nickname }, nicknameError);
+        return await checkDuplicate("http://0.0.0.0:3000/api/auth/nickname", { nickname }, nicknameError);
     };
 
     const resetProfileImage = () => {
@@ -216,7 +216,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 profileImage: profileImageUrl
             };
 
-            const response = await fetch('http://0.0.0.0:3000/auth/regist', {
+            const response = await fetch('http://0.0.0.0:3000/api/auth/regist', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(userData)
