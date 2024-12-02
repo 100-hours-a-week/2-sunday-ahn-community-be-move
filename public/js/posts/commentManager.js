@@ -1,3 +1,4 @@
+import 'dotenv/config';
 // 댓글 수정 중인 댓글을 기억하기 위한 변수
 let currentEditingComment = null;
 
@@ -21,7 +22,7 @@ const confirmDelete2 = async () => {
 
     const commentId = currentEditingComment.dataset.commentId;
     try {
-        const response = await fetch(`http://localhost:3000/api/comments/${commentId}`, { 
+        const response = await fetch(`http://${process.env.HOST}:3000/api/comments/${commentId}`, { 
             method: "DELETE",
             credentials: 'include' // 세션 쿠키를 포함시킴
         });
@@ -67,7 +68,7 @@ const updateComment = async () => {
     };
 
     try {
-        const response = await fetch(`http://localhost:3000/api/comments/${commentId}`, {
+        const response = await fetch(`http://${process.env.HOST}:3000/api/comments/${commentId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updatedComment),
@@ -110,7 +111,7 @@ const addComment = async () => {
     };
 
     try {
-        const response = await fetch('http://localhost:3000/api/comments', {
+        const response = await fetch('http://${process.env.HOST}:3000/api/comments', {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newComment),

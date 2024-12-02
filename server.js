@@ -3,6 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import fs from 'fs';
 import { fileURLToPath } from 'url';
+import 'dotenv/config';
 
 // 현재 파일의 디렉터리 경로 구하기 (ES6 모듈에서 __dirname을 사용하기 위해)
 const __filename = fileURLToPath(import.meta.url);
@@ -67,7 +68,7 @@ const upload = multer({ storage });
 // 이미지 업로드 라우트
 app.post('/upLoadProfile', upload.single('image'), (req, res) => {
     if (req.file) {
-        const imageUrl = `http://localhost:${PORT}/images/${req.file.filename}`;
+        const imageUrl = `http://${process.env.HOST}:${PORT}/images/${req.file.filename}`;
         console.log(imageUrl);
         res.json({ imageUrl });
     } else {
@@ -80,5 +81,5 @@ app.use('/images', express.static(imageUploadPath));
 
 // 서버 시작
 app.listen(PORT, () => {
-    console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);
+    console.log(`서버가 http://${process.env.HOST}:${PORT} 에서 실행 중입니다.`);
 });

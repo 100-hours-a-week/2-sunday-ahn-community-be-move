@@ -1,3 +1,4 @@
+import 'dotenv/config';
 // 토스트 메시지 표시 함수
 const showToast = () => {
     const toast = document.querySelector(".finish");
@@ -34,7 +35,7 @@ const confirmDelete = async () => {
     const userInfo = await loadUserInfo(); // 로컬에서 사용자 정보 가져오기
 
     try {
-        const response = await fetch(`http://localhost:3000/api/users/withdraw/${userInfo.userId}`, {
+        const response = await fetch(`http://${process.env.HOST}:3000/api/users/withdraw/${userInfo.userId}`, {
             method: "DELETE",
             credentials: "include" // 세션 쿠키 포함
         });
@@ -109,7 +110,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     hasError = true;
                 } else {
                     // 닉네임 업데이트 요청
-                    const nicknameResponse = await fetch(`http://localhost:3000/api/users/nickname/${userInfo.userId}`, {
+                    const nicknameResponse = await fetch(`http://${process.env.HOST}:3000/api/users/nickname/${userInfo.userId}`, {
                         method: "PATCH",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ newNickname: nickname }),
@@ -134,7 +135,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const formData = new FormData();
                 formData.append("image", file);
 
-                const uploadResponse = await fetch("http://localhost:2000/upLoadProfile", {
+                const uploadResponse = await fetch("http://${process.env.HOST}:2000/upLoadProfile", {
                     method: "POST",
                     body: formData,
                     credentials: "include"
@@ -149,7 +150,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     uploadedProfileImageUrl = result.imageUrl;
 
                     // 프로필 이미지 URL 업데이트 요청
-                    const imageResponse = await fetch(`http://localhost:3000/api/users/profileImg/${userInfo.userId}`, {
+                    const imageResponse = await fetch(`http://${process.env.HOST}:3000/api/users/profileImg/${userInfo.userId}`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ newProfileImg: uploadedProfileImageUrl }),

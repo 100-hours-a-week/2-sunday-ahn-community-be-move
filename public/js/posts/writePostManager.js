@@ -1,3 +1,4 @@
+import 'dotenv/config';
 document.addEventListener("DOMContentLoaded", async function () {
     const titleInput = document.getElementById("title");
     const contentInput = document.getElementById("content");
@@ -30,7 +31,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         formData.append('image', fileInput.files[0]);
 
         try {
-            const response = await fetch("http://localhost:2000/upLoadProfile", {
+            const response = await fetch("http://${process.env.HOST}:2000/upLoadProfile", {
                 method: "POST",
                 body: formData,
                 credentials: "include"
@@ -69,7 +70,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         };
 
         try {
-            const response = await fetch("http://localhost:3000/api/posts", {
+            const response = await fetch("http://${process.env.HOST}:3000/api/posts", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newPost),

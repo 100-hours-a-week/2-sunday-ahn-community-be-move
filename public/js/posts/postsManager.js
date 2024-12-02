@@ -1,3 +1,4 @@
+import 'dotenv/config';
 document.addEventListener("DOMContentLoaded", async () => {
     const postBtn = document.getElementById("postBtn");
     const postsContainer = document.querySelector(".postList");
@@ -20,7 +21,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 게시글 목록 불러오기
     const loadPostList = async () => {
         try {
-            const response = await fetch("http://localhost:3000/api/posts", {
+            const response = await fetch("http://${process.env.HOST}:3000/api/posts", {
                 method: "GET",
                 credentials: "include", // 세션 쿠키를 포함시킴
             });
