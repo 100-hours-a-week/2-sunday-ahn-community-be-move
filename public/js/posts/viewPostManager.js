@@ -40,7 +40,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 게시글 상세조회
     const fetchPostDetails = async (postId) => {
         try {
-            const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+            const response = await fetch(`http://0.0.0.0:3000/posts/${postId}`, {
                 method: 'GET',
                 credentials: 'include' // 세션 쿠키를 포함시킴
             });
@@ -153,7 +153,7 @@ const confirmDelete = () => {
     }
 
     // 백엔드로 삭제 요청 보내기
-    fetch(`http://localhost:3000/posts/${postId}`, {
+    fetch(`http://0.0.0.0:3000/posts/${postId}`, {
         method: "DELETE",
         credentials: 'include' // 세션 쿠키를 포함시킴
     })
@@ -184,7 +184,7 @@ const toggleLike = async () => {
     const postLikes = document.getElementById("likesCount");
 
     try {
-        const response = await fetch(`http://localhost:3000/posts/${postId}/likes`, {
+        const response = await fetch(`http://0.0.0.0:3000/posts/${postId}/likes`, {
             method: 'GET',
             credentials: 'include'
         });

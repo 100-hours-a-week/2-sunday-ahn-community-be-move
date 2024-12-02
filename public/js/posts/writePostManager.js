@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         formData.append('image', fileInput.files[0]);
 
         try {
-            const response = await fetch("http://localhost:2000/upLoadProfile", {
+            const response = await fetch("http://0.0.0.0:2000/upLoadProfile", {
                 method: "POST",
                 body: formData,
                 credentials: "include"
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", async function () {
         };
 
         try {
-            const response = await fetch("http://localhost:3000/posts", {
+            const response = await fetch("http://0.0.0.0:3000/posts", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify(newPost),

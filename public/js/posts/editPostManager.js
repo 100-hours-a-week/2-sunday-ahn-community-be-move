@@ -5,7 +5,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 로딩 화면 표시
     loadingScreen.style.display = "flex";
     try {
-        const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+        const response = await fetch(`http://0.0.0.0:3000/posts/${postId}`, {
             method: "GET",
             credentials: 'include' // 세션 쿠키를 포함시킴
         });
@@ -55,7 +55,7 @@ const uploadImage = async () => {
     formData.append('image', fileInput.files[0]); // 파일 선택 시 첫 번째 파일 사용
 
     try {
-        const response = await fetch(`http://localhost:2000/upLoadProfile`, {
+        const response = await fetch(`http://0.0.0.0:2000/upLoadProfile`, {
             method: "POST",
             body: formData,
             credentials: 'include' // 세션 쿠키를 포함시킴
@@ -108,7 +108,7 @@ submitButton.addEventListener("click", async (event) => {
 
     // 수정 요청 보내기
     try {
-        const response = await fetch(`http://localhost:3000/posts/${postId}`, {
+        const response = await fetch(`http://0.0.0.0:3000/posts/${postId}`, {
             method: "PUT",
             headers: {
                 "Content-Type": "application/json",

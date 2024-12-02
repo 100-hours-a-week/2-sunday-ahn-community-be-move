@@ -67,7 +67,7 @@ const upload = multer({ storage });
 // 이미지 업로드 라우트
 app.post('/upLoadProfile', upload.single('image'), (req, res) => {
     if (req.file) {
-        const imageUrl = `http://localhost:${PORT}/images/${req.file.filename}`;
+        const imageUrl = `http://0.0.0.0:${PORT}/images/${req.file.filename}`;
         console.log(imageUrl);
         res.json({ imageUrl });
     } else {
@@ -80,5 +80,5 @@ app.use('/images', express.static(imageUploadPath));
 
 // 서버 시작
 app.listen(PORT, () => {
-    console.log(`서버가 http://localhost:${PORT} 에서 실행 중입니다.`);
+    console.log(`서버가 http://0.0.0.0:${PORT} 에서 실행 중입니다.`);
 });
