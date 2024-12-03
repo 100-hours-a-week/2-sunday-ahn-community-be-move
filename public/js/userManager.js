@@ -34,7 +34,7 @@ const confirmDelete = async () => {
     const userInfo = await loadUserInfo(); // 로컬에서 사용자 정보 가져오기
 
     try {
-        const response = await fetch(`http://3.36.118.177:80/users/withdraw/${userInfo.userId}`, {
+        const response = await fetch(`http://3.36.118.177:80/api/users/withdraw/${userInfo.userId}`, {
             method: "DELETE",
             credentials: "include" // 세션 쿠키 포함
         });
@@ -109,7 +109,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     hasError = true;
                 } else {
                     // 닉네임 업데이트 요청
-                    const nicknameResponse = await fetch(`http://3.36.118.177:80/users/nickname/${userInfo.userId}`, {
+                    const nicknameResponse = await fetch(`http://3.36.118.177:80/api/users/nickname/${userInfo.userId}`, {
                         method: "PATCH",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ newNickname: nickname }),
@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                     uploadedProfileImageUrl = result.imageUrl;
 
                     // 프로필 이미지 URL 업데이트 요청
-                    const imageResponse = await fetch(`http://3.36.118.177:80/users/profileImg/${userInfo.userId}`, {
+                    const imageResponse = await fetch(`http://3.36.118.177:80/api/users/profileImg/${userInfo.userId}`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
                         body: JSON.stringify({ newProfileImg: uploadedProfileImageUrl }),

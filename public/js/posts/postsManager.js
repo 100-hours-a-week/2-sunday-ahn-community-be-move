@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     // 게시글 목록 불러오기
     const loadPostList = async () => {
         try {
-            const response = await fetch(`http://3.36.118.177:80/posts`, {
+            const response = await fetch(`http://3.36.118.177:80/api/posts`, {
                 method: "GET",
                 credentials: "include", // 세션 쿠키를 포함시킴
             });
