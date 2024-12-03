@@ -21,7 +21,7 @@ const confirmDelete2 = async () => {
 
     const commentId = currentEditingComment.dataset.commentId;
     try {
-        const response = await fetch(`http://3.36.118.177:3000/comments/${commentId}`, { 
+        const response = await fetch(`http://3.36.118.177:80/comments/${commentId}`, { 
             method: "DELETE",
             credentials: 'include' // 세션 쿠키를 포함시킴
         });
@@ -67,7 +67,7 @@ const updateComment = async () => {
     };
 
     try {
-        const response = await fetch(`http://3.36.118.177:3000/comments/${commentId}`, {
+        const response = await fetch(`http://3.36.118.177:80/comments/${commentId}`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(updatedComment),
@@ -110,7 +110,7 @@ const addComment = async () => {
     };
 
     try {
-        const response = await fetch(`http://3.36.118.177:3000/comments`, {
+        const response = await fetch(`http://3.36.118.177:80/comments`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(newComment),
