@@ -55,7 +55,7 @@ const uploadImage = async () => {
     formData.append('image', fileInput.files[0]); // 파일 선택 시 첫 번째 파일 사용
 
     try {
-        const response = await fetch(`http://3.36.118.177:2000/upLoadProfile`, {
+        const response = await fetch(`http://3.36.118.177:80/upLoadProfile`, {
             method: "POST",
             body: formData,
             credentials: 'include' // 세션 쿠키를 포함시킴

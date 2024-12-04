@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", async () => {
                 const formData = new FormData();
                 formData.append("image", file);
 
-                const uploadResponse = await fetch(`http://3.36.118.177:2000/upLoadProfile`, {
+                const uploadResponse = await fetch(`http://3.36.118.177:80/upLoadProfile`, {
                     method: "POST",
                     body: formData,
                     credentials: "include"
