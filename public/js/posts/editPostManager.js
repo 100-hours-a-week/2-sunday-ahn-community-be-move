@@ -122,7 +122,7 @@ submitButton.addEventListener("click", async (event) => {
         }
 
         // const data = await response.json();
-        window.location.href = `/viewPost?postId=${postId}`; // 수정 후 상세 페이지로 이동
+        window.location.href = `http://3.36.118.177:80/viewPost?postId=${postId}`; // 수정 후 상세 페이지로 이동
     } catch (error) {
         console.error("게시물 수정 중 오류 발생:", error);
         alert("게시물 수정에 실패했습니다.");
