@@ -67,7 +67,7 @@ const upload = multer({ storage });
 // 이미지 업로드 라우트
 app.post('/upLoadProfile', upload.single('image'), (req, res) => {
     if (req.file) {
-        const imageUrl = `http://3.36.118.177:80/images/${req.file.filename}`;
+        const imageUrl = `http://3.36.113.146:80/images/${req.file.filename}`;
         console.log(imageUrl);
         res.json({ imageUrl });
     } else {
